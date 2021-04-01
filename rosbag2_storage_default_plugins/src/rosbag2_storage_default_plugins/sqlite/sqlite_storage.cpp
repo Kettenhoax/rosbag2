@@ -390,11 +390,15 @@ void SqliteStorage::prepare_for_reading()
       "SELECT data, timestamp, topics.name "
       "FROM messages JOIN topics ON messages.topic_id = topics.id "
       "WHERE topics.name IN (" + topic_list + ")"
+      "AND messages.timestamp >= " + std::to_string(storage_filter_.start_time) + " "
+      "AND messages.timestamp <= " + std::to_string(storage_filter_.stop_time) + " "
       "ORDER BY messages.timestamp;");
   } else {
     read_statement_ = database_->prepare_statement(
       "SELECT data, timestamp, topics.name "
       "FROM messages JOIN topics ON messages.topic_id = topics.id "
+      "WHERE messages.timestamp >= " + std::to_string(storage_filter_.start_time) + " "
+      "AND messages.timestamp <= " + std::to_string(storage_filter_.stop_time) + " "
       "ORDER BY messages.timestamp;");
   }
   message_result_ = read_statement_->execute_query<

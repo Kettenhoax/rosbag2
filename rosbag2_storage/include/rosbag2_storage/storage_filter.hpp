@@ -17,6 +17,7 @@
 
 #include <string>
 #include <vector>
+#include "rcutils/time.h"
 
 namespace rosbag2_storage
 {
@@ -27,6 +28,16 @@ struct StorageFilter
   // specified topics will be returned. If list is empty, the filter is ignored
   // and all messages are returned.
   std::vector<std::string> topics;
+
+  // Start timestamp of reader
+  rcutils_time_point_value_t start_time;
+
+  // Stop timestamp of reader
+  rcutils_time_point_value_t stop_time;
+
+  StorageFilter() : topics(), start_time(0), stop_time(INT64_MAX) {
+
+  }
 };
 
 }  // namespace rosbag2_storage

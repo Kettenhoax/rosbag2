@@ -70,10 +70,10 @@ PYBIND11_MODULE(_storage, m) {
     &rosbag2_storage::StorageOptions::storage_config_uri);
 
   pybind11::class_<rosbag2_storage::StorageFilter>(m, "StorageFilter")
-  .def(
-    pybind11::init<std::vector<std::string>>(),
-    pybind11::arg("topics"))
-  .def_readwrite("topics", &rosbag2_storage::StorageFilter::topics);
+  .def(pybind11::init())
+  .def_readwrite("topics", &rosbag2_storage::StorageFilter::topics)
+  .def_readwrite("start_time", &rosbag2_storage::StorageFilter::start_time)
+  .def_readwrite("stop_time", &rosbag2_storage::StorageFilter::stop_time);
 
   pybind11::class_<rosbag2_storage::TopicMetadata>(m, "TopicMetadata")
   .def(
