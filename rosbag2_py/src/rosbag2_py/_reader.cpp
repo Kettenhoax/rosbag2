@@ -65,6 +65,12 @@ public:
   }
 
   /// Return a mapping from topic name to topic type.
+  rosbag2_storage::BagMetadata get_metadata()
+  {
+    return reader_->get_metadata();
+  }
+
+  /// Return a mapping from topic name to topic type.
   std::vector<rosbag2_storage::TopicMetadata> get_all_topics_and_types()
   {
     return reader_->get_all_topics_and_types();
@@ -109,6 +115,9 @@ PYBIND11_MODULE(_reader, m) {
   .def("read_next", &rosbag2_py::Reader<rosbag2_cpp::readers::SequentialReader>::read_next)
   .def("has_next", &rosbag2_py::Reader<rosbag2_cpp::readers::SequentialReader>::has_next)
   .def(
+    "get_metadata",
+    &rosbag2_py::Reader<rosbag2_cpp::readers::SequentialReader>::get_metadata)
+  .def(
     "get_all_topics_and_types",
     &rosbag2_py::Reader<rosbag2_cpp::readers::SequentialReader>::get_all_topics_and_types)
   .def("set_filter", &rosbag2_py::Reader<rosbag2_cpp::readers::SequentialReader>::set_filter)
@@ -121,6 +130,9 @@ PYBIND11_MODULE(_reader, m) {
   .def(
     "read_next", &rosbag2_py::Reader<rosbag2_compression::SequentialCompressionReader>::read_next)
   .def("has_next", &rosbag2_py::Reader<rosbag2_compression::SequentialCompressionReader>::has_next)
+  .def(
+    "get_metadata",
+    &rosbag2_py::Reader<rosbag2_compression::SequentialCompressionReader>::get_metadata)
   .def(
     "get_all_topics_and_types",
     &rosbag2_py::Reader<
